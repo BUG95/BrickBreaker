@@ -74,7 +74,6 @@ public class Ball extends DynamicEntity {
 
     @Override
     public void move() {
-        checkCollisions();
         moveUp();
         moveDown();
         moveLeft();
@@ -159,6 +158,7 @@ public class Ball extends DynamicEntity {
     public void tick() {
         checkInput();
         if(isActive){
+            checkCollisions();
             move();
         } else {
             followPlayer();
