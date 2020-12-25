@@ -3,10 +3,7 @@ package game.brickbraker;
 import game.brickbraker.display.Display;
 import game.brickbraker.entities.dynamic.Ball;
 import game.brickbraker.entities.dynamic.Player;
-import game.brickbraker.entities.fixed.Brick;
-import game.brickbraker.entities.fixed.BrickManager;
 import game.brickbraker.input.KeyManager;
-import game.brickbraker.map.Map;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -26,17 +23,14 @@ public class Game implements Runnable {
     private Ball ball;
     // key manager
     private KeyManager keyManager;
-    // world
-    private Map map;
 
     public Game(String title, int width, int height){
         this.title = title;
         this.width = width;
         this.height = height;
 
-        map = new Map(this, "res/maps/map1.txt");
         player = new Player(this, (float)width / 2 - Player.PLAYER_WIDTH / 2, height - 20);
-        ball = new Ball(this, 0,0);
+        ball = new Ball(this, player.getX() + Player.PLAYER_WIDTH / 2 - Ball.BALL_WIDTH / 2, player.getY() - Player.PLAYER_HEIGHT);
         keyManager = new KeyManager();
     }
 
@@ -46,7 +40,6 @@ public class Game implements Runnable {
     }
 
     public void tick(){
-        map.tick();
         keyManager.tick();
         player.tick();
         ball.tick();
@@ -62,7 +55,6 @@ public class Game implements Runnable {
         g = bs.getDrawGraphics();
         g.clearRect(0,0,width, height);
         // draw
-        map.render(g);
         player.render(g);
         ball.render(g);
         // end draw
@@ -96,7 +88,7 @@ public class Game implements Runnable {
             }
 
             if(timer >= 1000000000){
-                //System.out.println("FPS: " + ticks);
+                System.out.println("FPS: " + ticks);
                 ticks = 0;
                 timer = 0;
             }
@@ -131,14 +123,6 @@ public class Game implements Runnable {
 
     public Player getPlayer(){
         return player;
-    }
-
-    public Ball getBall(){
-        return ball;
-    }
-
-    public Map getMap(){
-        return map;
     }
 
 }
