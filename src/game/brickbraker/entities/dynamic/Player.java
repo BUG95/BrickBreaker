@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Player extends DynamicEntity {
 
-    public static final float PLAYER_WIDTH = 60, PLAYER_HEIGHT = 10, PLAYER_Y_OFFSET = 20;
+    public static final float PLAYER_WIDTH = 100, PLAYER_HEIGHT = 10, PLAYER_Y_OFFSET = 20;
     private static final int PLAYER_SPEED = 5;
     private int lives = 3;
 

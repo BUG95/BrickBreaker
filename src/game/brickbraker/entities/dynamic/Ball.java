@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Ball extends DynamicEntity {
 
-    public static final float BALL_WIDTH = 10, BALL_HEIGHT = 10;
+    public static final float BALL_WIDTH = 14, BALL_HEIGHT = 14;
     private final int BALL_SPEED = 5;
     private boolean leftDirection, rightDirection, upDirection, downDirection;
     private boolean slowLeftDirection, slowRightDirection;
@@ -145,7 +145,7 @@ public class Ball extends DynamicEntity {
 
     private void followPlayer(){
          x = game.getGameState().getMap().getPlayer().getX() + Player.PLAYER_WIDTH / 2 - Ball.BALL_WIDTH / 2;
-         y = game.getGameState().getMap().getPlayer().getY() - Player.PLAYER_HEIGHT;
+         y = game.getGameState().getMap().getPlayer().getY() - Ball.BALL_HEIGHT;
     }
 
     private void checkInput(){
