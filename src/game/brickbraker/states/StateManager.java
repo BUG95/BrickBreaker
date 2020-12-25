@@ -2,14 +2,23 @@ package game.brickbraker.states;
 
 public class StateManager {
 
-    private static State currentState = null;
+    private State currentState = null;
+    private static StateManager stateManager = null;
+
+    public static StateManager getInstance() {
+        if(stateManager == null){
+            stateManager = new StateManager();
+        }
+        return stateManager;
+    }
+
     private StateManager(){}
 
-    public static void setCurrentState(State state){
+    public void setCurrentState(State state){
          currentState = state;
     }
 
-    public static State getCurrentState(){
+    public State getCurrentState(){
         return currentState;
     }
 }

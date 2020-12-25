@@ -30,7 +30,7 @@ public class Game implements Runnable {
         keyManager = new KeyManager();
         displayInit();
         gameState = new GameState(this);
-        StateManager.setCurrentState(gameState);
+        StateManager.getInstance().setCurrentState(gameState);
     }
 
     private void displayInit(){
@@ -39,8 +39,8 @@ public class Game implements Runnable {
     }
 
     public void tick(){
-        if(StateManager.getCurrentState() == null) return;
-        StateManager.getCurrentState().tick();
+        if(StateManager.getInstance().getCurrentState() == null) return;
+        StateManager.getInstance().getCurrentState().tick();
         keyManager.tick();
     }
 
@@ -54,8 +54,8 @@ public class Game implements Runnable {
         g = bs.getDrawGraphics();
         g.clearRect(0,0,width, height);
         // draw
-        if(StateManager.getCurrentState() == null) return;
-        StateManager.getCurrentState().render(g);
+        if(StateManager.getInstance().getCurrentState() == null) return;
+        StateManager.getInstance().getCurrentState().render(g);
         // end draw
         bs.show();
         g.dispose();
