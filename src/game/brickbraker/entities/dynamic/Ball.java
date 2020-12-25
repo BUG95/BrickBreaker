@@ -10,7 +10,7 @@ public class Ball extends DynamicEntity {
     public static final float BALL_WIDTH = 14, BALL_HEIGHT = 14;
     private final int BALL_SPEED = 5;
     private boolean leftDirection, rightDirection, upDirection, downDirection;
-    private boolean slowLeftDirection, slowRightDirection;
+    private boolean moveSlow;
 
     public Ball(Game game, float x, float y) {
         super(game, x, y, BALL_WIDTH, BALL_HEIGHT, false);
@@ -20,10 +20,9 @@ public class Ball extends DynamicEntity {
     private void resetDirections(){
         leftDirection = false;
         rightDirection = false;
-        slowLeftDirection = false;
-        slowRightDirection = false;
         upDirection = true;
         downDirection = false;
+        moveSlow = false;
     }
         // playerWidth ->  [[l1][l2][c][r2][r1]]
     private void checkCollisions(){
@@ -42,15 +41,15 @@ public class Ball extends DynamicEntity {
 
             ballX = x + BALL_WIDTH / 2;
 
-            if(ballX >= playerX && ballX < l1) {
+            if(ballX <= l1) {
                 leftDirection = true;
-            } else if (ballX >= l1 && ballX < l2){
+            } else if (ballX > l1 && ballX <= l2){
                 leftDirection = true;
-                slowLeftDirection = true;
-            } else if(ballX >=c && ballX < r2){
+                moveSlow = true;
+            } else if(ballX >= c && ballX <= r2){
                 rightDirection = true;
-                slowRightDirection = true;
-            } else if(ballX >= r2 && ballX <= r1){
+                moveSlow = true;
+            } else if(ballX > r2){
                 rightDirection = true;
             }
 
@@ -104,19 +103,15 @@ public class Ball extends DynamicEntity {
     private void moveLeft(){
         if(leftDirection) {
             float speed = BALL_SPEED;
-            if(slowLeftDirection) {
+            if(moveSlow) {
                 speed = BALL_SPEED - BALL_SPEED / 2.0f;
             }
             if(x - speed < 0){
                 leftDirection = false;
                 rightDirection = true;
-                if(slowLeftDirection){
-                    slowLeftDirection = false;
-                    slowRightDirection = true;
-                }
                 return;
             }
-            if(slowLeftDirection){
+            if(moveSlow){
                 x -= BALL_SPEED - BALL_SPEED / 2.0f;
                 return;
             }
@@ -129,13 +124,9 @@ public class Ball extends DynamicEntity {
             if(x >= game.getDisplay().getCanvas().getWidth() - BALL_WIDTH){
                 rightDirection = false;
                 leftDirection = true;
-                if(slowRightDirection){
-                    slowRightDirection = false;
-                    slowLeftDirection = true;
-                }
                 return;
             }
-            if(slowRightDirection){
+            if(moveSlow){
                 x += BALL_SPEED - BALL_SPEED / 2.0f;
                 return;
             }
