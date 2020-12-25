@@ -53,6 +53,8 @@ public class Ball extends DynamicEntity {
             } else if(ballX >= r2 && ballX <= r1){
                 rightDirection = true;
             }
+
+            return;
         }
 
         for(Brick b : game.getGameState().getMap().getBrickManager().getBricks())
