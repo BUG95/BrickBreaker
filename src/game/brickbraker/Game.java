@@ -2,7 +2,9 @@ package game.brickbraker;
 
 import game.brickbraker.display.Display;
 import game.brickbraker.input.KeyManager;
-import game.brickbraker.map.Map;
+import game.brickbraker.states.GameState;
+import game.brickbraker.states.State;
+import game.brickbraker.states.StateManager;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -18,8 +20,8 @@ public class Game implements Runnable {
     private Graphics g;
     // key manager
     private KeyManager keyManager;
-    // map
-    private Map map;
+    // states
+    private State gameState;
 
     public Game(String title, int width, int height){
         this.title = title;
@@ -27,7 +29,8 @@ public class Game implements Runnable {
         this.height = height;
         keyManager = new KeyManager();
         displayInit();
-        map = new Map(this, "res/maps/map1.txt");
+        gameState = new GameState(this);
+        StateManager.setCurrentState(gameState);
     }
 
     private void displayInit(){
@@ -36,7 +39,8 @@ public class Game implements Runnable {
     }
 
     public void tick(){
-        map.tick();
+        if(StateManager.getCurrentState() == null) return;
+        StateManager.getCurrentState().tick();
         keyManager.tick();
     }
 
@@ -50,7 +54,8 @@ public class Game implements Runnable {
         g = bs.getDrawGraphics();
         g.clearRect(0,0,width, height);
         // draw
-        map.render(g);
+        if(StateManager.getCurrentState() == null) return;
+        StateManager.getCurrentState().render(g);
         // end draw
         bs.show();
         g.dispose();
@@ -113,8 +118,8 @@ public class Game implements Runnable {
         return keyManager;
     }
 
-    public Map getMap(){
-        return map;
+    public GameState getGameState(){
+        return (GameState) gameState;
     }
 
 }
