@@ -29,7 +29,7 @@ public class Ball extends DynamicEntity {
         if (checkCollisionWith(game.getGameState().getMap().getPlayer())){
             resetDirections();
 
-            float l1, l2, c, r2, r1, ballX;
+            float l1, l2, c, r2, ballX;
             float playerX = game.getGameState().getMap().getPlayer().getX();
             float offset = Player.PLAYER_WIDTH / 5;
 
@@ -37,7 +37,6 @@ public class Ball extends DynamicEntity {
             l2 = playerX + 2*offset;
             c =  playerX + 3*offset;
             r2 = playerX + 4*offset;
-            r1 = playerX + 5*offset;
 
             ballX = x + BALL_WIDTH / 2;
 
