@@ -9,39 +9,50 @@ public class Ball extends DynamicEntity {
 
     public static final float BALL_WIDTH = 10, BALL_HEIGHT = 10;
     private final int BALL_SPEED = 5;
-    private boolean isFree = false;
     private boolean leftDirection, rightDirection, upDirection, downDirection;
+    private boolean slowLeftDirection, slowRightDirection;
 
     public Ball(Game game, float x, float y) {
         super(game, x, y, BALL_WIDTH, BALL_HEIGHT, false);
-        leftDirection = false;
-        rightDirection = false;
-        upDirection = true;
-        downDirection = false;
+        resetDirections();
     }
 
     private void resetDirections(){
         leftDirection = false;
         rightDirection = false;
-        upDirection = false;
+        slowLeftDirection = false;
+        slowRightDirection = false;
+        upDirection = true;
         downDirection = false;
     }
-
+        // playerWidth ->  [[l1][l2][c][r2][r1]]
     private void checkCollisions(){
         if (checkCollisionWith(game.getGameState().getMap().getPlayer())){
             resetDirections();
-            upDirection = true;
-            float a, b;
-            a = x + width / 2;
-            b = game.getGameState().getMap().getPlayer().getX() + Player.PLAYER_WIDTH / 2;
 
-            if(a > b){
-                rightDirection = true;
-            } else if(a < b){
+            float l1, l2, c, r2, r1, ballX;
+            float playerX = game.getGameState().getMap().getPlayer().getX();
+            float offset = Player.PLAYER_WIDTH / 5;
+
+            l1 = playerX +   offset;
+            l2 = playerX + 2*offset;
+            c =  playerX + 3*offset;
+            r2 = playerX + 4*offset;
+            r1 = playerX + 5*offset;
+
+            ballX = x + BALL_WIDTH / 2;
+
+            if(ballX >= playerX && ballX < l1) {
                 leftDirection = true;
+            } else if (ballX >= l1 && ballX < l2){
+                leftDirection = true;
+                slowLeftDirection = true;
+            } else if(ballX >=c && ballX < r2){
+                rightDirection = true;
+                slowRightDirection = true;
+            } else if(ballX >= r2 && ballX <= r1){
+                rightDirection = true;
             }
-
-            return;
         }
 
         for(Brick b : game.getGameState().getMap().getBrickManager().getBricks())
@@ -54,7 +65,7 @@ public class Ball extends DynamicEntity {
                 }
                 upDirection = false;
                 downDirection = true;
-                return;
+                break;
             }
     }
 
@@ -91,9 +102,22 @@ public class Ball extends DynamicEntity {
 
     private void moveLeft(){
         if(leftDirection) {
-            if(x - BALL_SPEED < 0){
+            float speed = BALL_SPEED;
+            if(slowLeftDirection) {
+                speed = BALL_SPEED - BALL_SPEED / 2.0f;
+            }
+            if(x - speed < 0){
                 leftDirection = false;
                 rightDirection = true;
+                if(slowLeftDirection){
+                    slowLeftDirection = false;
+                    slowRightDirection = true;
+                }
+                return;
+            }
+            if(slowLeftDirection){
+                x -= BALL_SPEED - BALL_SPEED / 2.0f;
+                return;
             }
             x -= BALL_SPEED;
         }
@@ -104,6 +128,15 @@ public class Ball extends DynamicEntity {
             if(x >= game.getDisplay().getCanvas().getWidth() - BALL_WIDTH){
                 rightDirection = false;
                 leftDirection = true;
+                if(slowRightDirection){
+                    slowRightDirection = false;
+                    slowLeftDirection = true;
+                }
+                return;
+            }
+            if(slowRightDirection){
+                x += BALL_SPEED - BALL_SPEED / 2.0f;
+                return;
             }
             x += BALL_SPEED;
         }

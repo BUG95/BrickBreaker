@@ -19,7 +19,7 @@ public class Map {
     public Map(Game game, String path){
         this.game = game;
         brickManager = new BrickManager(game);
-        player = new Player(game, (float)game.getDisplay().getCanvas().getWidth() / 2 - Player.PLAYER_WIDTH / 2, game.getDisplay().getCanvas().getHeight() - 20);
+        player = new Player(game, (float)game.getDisplay().getCanvas().getWidth() / 2 - Player.PLAYER_WIDTH / 2, game.getDisplay().getCanvas().getHeight() - Player.PLAYER_Y_OFFSET);
         ball = new Ball(game,0,0);
         loadMap(path);
     }
