@@ -29,7 +29,7 @@ public class BrickManager {
         while(it.hasNext()){
             Brick brick = it.next();
             brick.tick();
-            if(brick.getHit()){
+            if(brick.getLevel() <= 0){
                 it.remove();
             }
         }

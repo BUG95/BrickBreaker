@@ -16,7 +16,10 @@ public class Brick extends FixedEntity {
 
     @Override
     public void tick() {
-
+        if(isHit){
+            level--;
+            isHit = false;
+        }
     }
 
     @Override
@@ -32,5 +35,9 @@ public class Brick extends FixedEntity {
 
     public void setHit(boolean hit){
         isHit = hit;
+    }
+
+    public int getLevel(){
+        return level;
     }
 }

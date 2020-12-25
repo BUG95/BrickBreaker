@@ -28,12 +28,12 @@ public class Ball extends DynamicEntity {
     }
 
     private void checkCollisions(){
-        if (checkCollisionWith(game.getPlayer())){
+        if (checkCollisionWith(game.getMap().getPlayer())){
             resetDirections();
             upDirection = true;
             float a, b;
             a = x + width / 2;
-            b = game.getPlayer().getX() + Player.PLAYER_WIDTH / 2;
+            b = game.getMap().getPlayer().getX() + Player.PLAYER_WIDTH / 2;
 
             if(a > b){
                 rightDirection = true;
@@ -81,7 +81,7 @@ public class Ball extends DynamicEntity {
     private void moveDown(){
         if(downDirection) {
             y += BALL_SPEED;
-            if(y > game.getPlayer().getY() + Player.PLAYER_HEIGHT){
+            if(y > game.getMap().getPlayer().getY() + Player.PLAYER_HEIGHT){
                 isActive = false;
                 resetDirections();
                 upDirection = true;
@@ -110,8 +110,8 @@ public class Ball extends DynamicEntity {
     }
 
     private void followPlayer(){
-         x = game.getPlayer().getX() + Player.PLAYER_WIDTH / 2 - Ball.BALL_WIDTH / 2;
-         y = game.getPlayer().getY() - Player.PLAYER_HEIGHT;
+         x = game.getMap().getPlayer().getX() + Player.PLAYER_WIDTH / 2 - Ball.BALL_WIDTH / 2;
+         y = game.getMap().getPlayer().getY() - Player.PLAYER_HEIGHT;
     }
 
     private void checkInput(){
