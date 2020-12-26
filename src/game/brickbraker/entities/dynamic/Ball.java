@@ -11,10 +11,11 @@ public class Ball extends DynamicEntity {
     private final int BALL_SPEED = 5;
     private boolean leftDirection, rightDirection, upDirection, downDirection;
     private boolean moveSlow;
-
+    private boolean isX = false;
     public Ball(Game game, float x, float y) {
         super(game, x, y, BALL_WIDTH, BALL_HEIGHT, false);
         resetDirections();
+
     }
 
     private void resetDirections(){
@@ -24,11 +25,12 @@ public class Ball extends DynamicEntity {
         downDirection = false;
         moveSlow = false;
     }
-        // playerWidth ->  [[l1][l2][c][r2][r1]]
+
     private void checkCollisions(){
         if (checkCollisionWith(game.getGameState().getMap().getPlayer())){
             resetDirections();
 
+            // playerWidth ->  [[l1][l2][c][r2][r1]]
             float l1, l2, c, r2, ballX;
             float playerX = game.getGameState().getMap().getPlayer().getX();
             float offset = Player.PLAYER_WIDTH / 5;
@@ -58,6 +60,9 @@ public class Ball extends DynamicEntity {
         for(Brick b : game.getGameState().getMap().getBrickManager().getBricks())
             if(checkCollisionWith(b)){
                 b.setHit(true);
+                // temp code
+                if(isX) return;
+                //
                 if(downDirection){
                     downDirection = false;
                     upDirection = true;
@@ -81,7 +86,7 @@ public class Ball extends DynamicEntity {
     private void moveUp(){
         if(upDirection) {
             y -= BALL_SPEED;
-            if(y < 0){
+            if(y < game.getGameState().getMap().getTopBorderHeight()){
                 upDirection = false;
                 downDirection = true;
             }
@@ -105,7 +110,7 @@ public class Ball extends DynamicEntity {
             if(moveSlow) {
                 speed = BALL_SPEED - BALL_SPEED / 2.0f;
             }
-            if(x - speed < 0){
+            if(x - game.getGameState().getMap().getLeftBorderWidth() - speed < 0){
                 leftDirection = false;
                 rightDirection = true;
                 return;
@@ -120,7 +125,7 @@ public class Ball extends DynamicEntity {
 
     private void moveRight(){
         if(rightDirection) {
-            if(x >= game.getDisplay().getCanvas().getWidth() - BALL_WIDTH){
+            if(x >= game.getDisplay().getCanvas().getWidth() - BALL_WIDTH - game.getGameState().getMap().getRightBorderWidth()){
                 rightDirection = false;
                 leftDirection = true;
                 return;
@@ -142,6 +147,11 @@ public class Ball extends DynamicEntity {
         if(game.getKeyManager().space){
             isActive = true;
         }
+        // temp code
+        if(game.getKeyManager().x){
+            isX = true;
+        }
+        //
     }
 
     @Override

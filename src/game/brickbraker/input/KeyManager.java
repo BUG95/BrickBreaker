@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener {
     private boolean[] keys;
     public boolean leftArrow, rightArrow, space;
+    public boolean x;
 
     public KeyManager(){
         keys = new boolean[256];
@@ -16,6 +17,7 @@ public class KeyManager implements KeyListener {
         leftArrow = keys[KeyEvent.VK_LEFT];
         rightArrow = keys[KeyEvent.VK_RIGHT];
         space = keys[KeyEvent.VK_SPACE];
+        x = keys[KeyEvent.VK_X];
     }
 
     @Override

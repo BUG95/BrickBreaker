@@ -1,7 +1,6 @@
 package game.brickbraker.entities;
 
 import game.brickbraker.Game;
-import org.w3c.dom.css.Rect;
 
 import java.awt.*;
 

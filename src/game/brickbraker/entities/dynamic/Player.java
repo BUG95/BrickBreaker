@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Player extends DynamicEntity {
 
-    public static final float PLAYER_WIDTH = 100, PLAYER_HEIGHT = 10, PLAYER_Y_OFFSET = 20;
+    public static final float PLAYER_WIDTH = 80, PLAYER_HEIGHT = 10, PLAYER_Y_OFFSET = 20;
     private static final int PLAYER_SPEED = 5;
     private int lives = 3;
 
@@ -17,12 +17,20 @@ public class Player extends DynamicEntity {
     @Override
     public void move() {
         if(game.getKeyManager().leftArrow){
-            if(x - PLAYER_SPEED < 0) return;
-            x -= PLAYER_SPEED;
+            moveLeft();
         } else if(game.getKeyManager().rightArrow){
-            if(x >= game.getDisplay().getCanvas().getWidth() - PLAYER_WIDTH) return;
-            x += PLAYER_SPEED;
+            moveRight();
         }
+    }
+
+    private void moveLeft(){
+        if(x - game.getGameState().getMap().getLeftBorderWidth() - PLAYER_SPEED < 0) return;
+        x -= PLAYER_SPEED;
+    }
+
+    private void moveRight(){
+        if(x >= game.getDisplay().getCanvas().getWidth() - PLAYER_WIDTH - game.getGameState().getMap().getRightBorderWidth()) return;
+        x += PLAYER_SPEED;
     }
 
     @Override
