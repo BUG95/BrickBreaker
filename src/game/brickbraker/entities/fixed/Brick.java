@@ -1,11 +1,12 @@
 package game.brickbraker.entities.fixed;
 
 import game.brickbraker.Game;
+import game.brickbraker.gfx.Assets;
 
 import java.awt.*;
 
 public class Brick extends FixedEntity {
-    public static final float BRICK_WIDTH = 30, BRICK_HEIGHT = 30;
+    public static final float BRICK_WIDTH = 30, BRICK_HEIGHT = 15;
     private boolean isHit = false;
     private int level;
 
@@ -24,9 +25,7 @@ public class Brick extends FixedEntity {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.GREEN.darker());
-        if(level == 2) g.setColor(Color.ORANGE);
-        g.fillRect((int)x, (int)y, (int)BRICK_WIDTH, (int)BRICK_HEIGHT);
+        g.drawImage(Assets.getInstance().getBrickLevelByGameLevel(game.getGameState().getLevel(), level), (int)x, (int)y, (int)BRICK_WIDTH, (int)BRICK_HEIGHT, null);
     }
 
     public boolean getHit(){

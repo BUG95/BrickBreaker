@@ -154,8 +154,16 @@ public class Ball extends DynamicEntity {
         //
     }
 
+    private boolean levelCompleted(){
+        return (game.getGameState().getMap().getBrickManager().getAvailableBricks() == 0);
+    }
+
     @Override
     public void tick() {
+        if(levelCompleted()){
+            game.getGameState().levelUp();
+            return;
+        }
         checkInput();
         if(isActive){
             checkCollisions();

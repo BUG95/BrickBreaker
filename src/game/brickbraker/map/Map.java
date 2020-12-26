@@ -39,21 +39,20 @@ public class Map {
         width = Utils.parseInt(tokens[4]);
         height = Utils.parseInt(tokens[5]);
 
-        int xPos = 0, yPos = topBorderHeight + 5, xOffset, yOffset;
+        int xStartPos = 0, yStartPos = topBorderHeight + 5, xOffset, yOffset;
         xOffset = (int)Brick.BRICK_WIDTH + 5;
         yOffset = (int)Brick.BRICK_HEIGHT + 5;
 
-        xPos += xOffset;
+        xStartPos += xOffset;
 
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
-                brickManager.addBrick(new Brick(game, xPos, yPos, Utils.parseInt(tokens[(y + x * height) + 6])));
-                xPos += xOffset;
+                brickManager.addBrick(new Brick(game, xStartPos, yStartPos, Utils.parseInt(tokens[(y + x * height) + 6])));
+                xStartPos += xOffset;
             }
-            yPos += yOffset;
-            xPos = xOffset;
+            yStartPos += yOffset;
+            xStartPos = xOffset;
         }
-
     }
 
     public void tick(){

@@ -48,4 +48,8 @@ public class BrickManager {
     public ArrayList<Brick> getBricks(){
         return bricks;
     }
+
+    public int getAvailableBricks(){
+        return bricks.size();
+    }
 }

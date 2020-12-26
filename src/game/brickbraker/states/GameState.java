@@ -7,9 +7,20 @@ import java.awt.*;
 
 public class GameState extends State {
     private Map map;
+    private int level = 1;
+    private final int MAX_LEVEL = 5;
     public GameState(Game game) {
         super(game);
-        map = new Map(game, "res/maps/map1.txt");
+        loadMap();
+    }
+
+    public void levelUp(){
+        level++;
+        //if(level > MAX_LEVEL); /* switch state to game completed" */
+        loadMap();
+    }
+    private void loadMap(){
+        map = new Map(game, "res/maps/map" + level + ".txt");
     }
 
     @Override
@@ -26,4 +37,7 @@ public class GameState extends State {
         return map;
     }
 
+    public int getLevel(){
+        return level;
+    }
 }
