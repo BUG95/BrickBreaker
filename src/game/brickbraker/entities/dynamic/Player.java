@@ -45,4 +45,14 @@ public class Player extends DynamicEntity {
         g.setColor(Color.BLACK);
         g.fillRect((int)x, (int)y, (int)width, (int)height);
     }
+
+    public int getLives(){
+        return lives;
+    }
+
+    public void setLives(int lives){this.lives=lives;}
+
+    public void decreaseLives(){
+        lives--;
+    }
 }

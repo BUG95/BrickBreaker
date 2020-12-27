@@ -13,6 +13,8 @@ import java.awt.*;
 public class Map {
     private int width, height;
     private int topBorderHeight, rightBorderWidth, bottomBorderHeight, leftBorderWidth;
+    private int topBorderInfoPanelHeight, rightBorderInfoPanelWidth, bottomBorderInfoPanelHeight, leftBorderInfoPanelWidth;
+    private int heartWidth, heartHeight;
     private Game game;
     private BrickManager brickManager;
     private Player player;
@@ -22,7 +24,7 @@ public class Map {
         this.game = game;
         brickManager = new BrickManager(game);
         player = new Player(game, (float)game.getDisplay().getCanvas().getWidth() / 2 - Player.PLAYER_WIDTH / 2, game.getDisplay().getCanvas().getHeight() - Player.PLAYER_Y_OFFSET);
-        ball = new Ball(game,0,0);
+        ball = new Ball(game,-1,-1);
         loadMap(path);
     }
 
@@ -36,10 +38,18 @@ public class Map {
         bottomBorderHeight = Utils.parseInt(tokens[2]);
         leftBorderWidth = Utils.parseInt(tokens[3]);
 
-        width = Utils.parseInt(tokens[4]);
-        height = Utils.parseInt(tokens[5]);
+        topBorderInfoPanelHeight = Utils.parseInt(tokens[4]);
+        rightBorderInfoPanelWidth = Utils.parseInt(tokens[5]);
+        bottomBorderInfoPanelHeight = Utils.parseInt(tokens[6]);
+        leftBorderInfoPanelWidth = Utils.parseInt(tokens[7]);
 
-        int xStartPos = 0, yStartPos = topBorderHeight + 5, xOffset, yOffset;
+        heartWidth = Utils.parseInt(tokens[8]);
+        heartHeight = Utils.parseInt(tokens[9]);
+
+        width = Utils.parseInt(tokens[10]);
+        height = Utils.parseInt(tokens[11]);
+
+        int xStartPos = 0, yStartPos = topBorderHeight + heartHeight + 10, xOffset, yOffset;
         xOffset = (int)Brick.BRICK_WIDTH + 5;
         yOffset = (int)Brick.BRICK_HEIGHT + 5;
 
@@ -47,7 +57,7 @@ public class Map {
 
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
-                brickManager.addBrick(new Brick(game, xStartPos, yStartPos, Utils.parseInt(tokens[(y + x * height) + 6])));
+                brickManager.addBrick(new Brick(game, xStartPos, yStartPos, Utils.parseInt(tokens[(y + x * height) + 12])));
                 xStartPos += xOffset;
             }
             yStartPos += yOffset;
@@ -63,6 +73,9 @@ public class Map {
 
     public void render(Graphics g){
         g.drawImage(Assets.getInstance().getLevelBorder(), 0,0, null);
+        for(int i = 1; i <= player.getLives(); i++){
+            g.drawImage(Assets.getInstance().getHeartImg(), game.getDisplay().getCanvas().getWidth()  - rightBorderInfoPanelWidth - i * heartWidth, (topBorderInfoPanelHeight + bottomBorderInfoPanelHeight) / 2 - heartHeight / 2, heartWidth, heartHeight,null);
+        }
         brickManager.render(g);
         player.render(g);
         ball.render(g);

@@ -97,6 +97,7 @@ public class Ball extends DynamicEntity {
         if(downDirection) {
             y += BALL_SPEED;
             if(y > game.getGameState().getMap().getPlayer().getY() + Player.PLAYER_HEIGHT){
+                game.getGameState().getMap().getPlayer().decreaseLives();
                 isActive = false;
                 resetDirections();
                 upDirection = true;
@@ -161,7 +162,9 @@ public class Ball extends DynamicEntity {
     @Override
     public void tick() {
         if(levelCompleted()){
+            int currentLives = game.getGameState().getMap().getPlayer().getLives();
             game.getGameState().levelUp();
+            game.getGameState().getMap().getPlayer().setLives(currentLives);
             return;
         }
         checkInput();

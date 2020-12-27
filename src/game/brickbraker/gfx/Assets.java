@@ -14,12 +14,17 @@ public class Assets {
         return assets;
     }
 
+
     private BufferedImage border;
-    private final int BRICK_WIDTH = 16, BRICK_HEIGHT = 8;
-    private final int BRICK_SHEET_WIDTH = 20, BRICK_SHEET_HEIGHT = 32;
+    private BufferedImage heartImg;
     private HashMap<Integer, HashMap<Integer, BufferedImage>> bricksByGameLevel;
 
     public void init(){
+        final int BRICK_WIDTH = 16, BRICK_HEIGHT = 8;
+        final int BRICK_SHEET_WIDTH = 20, BRICK_SHEET_HEIGHT = 32; // 20 rows and 32 cols
+        final int HEART_WIDTH = 153, HEART_HEIGHT = 146;
+        final int HEART_START_X = 44, HEART_START_Y = 54;
+
         bricksByGameLevel = new HashMap<>();
 
         HashMap<Integer, BufferedImage> bricksForGameLevel1, bricksForGameLevel2,
@@ -31,7 +36,13 @@ public class Assets {
         bricksForGameLevel4 = new HashMap<>();
         bricksForGameLevel5 = new HashMap<>();
 
-        border = ImageLoader.getInstance().loadImage("/textures/border1.png");
+        ///////
+        border = ImageLoader.getInstance().loadImage("/textures/gameBorder.png");
+
+        SpriteSheet heartSpriteSheet = new SpriteSheet(ImageLoader.getInstance().loadImage("/textures/heart.png"));
+        heartImg = heartSpriteSheet.crop(HEART_START_X, HEART_START_Y, HEART_WIDTH, HEART_HEIGHT);
+
+        //////
 
         SpriteSheet sheet = new SpriteSheet(ImageLoader.getInstance().loadImage("/textures/bricks.png"));
         BufferedImage[][] bricks = new BufferedImage[BRICK_SHEET_WIDTH][BRICK_SHEET_HEIGHT];
@@ -83,4 +94,5 @@ public class Assets {
         return border;
     }
 
+    public BufferedImage getHeartImg(){return heartImg;}
 }

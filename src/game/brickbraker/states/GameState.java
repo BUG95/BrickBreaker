@@ -19,6 +19,7 @@ public class GameState extends State {
         //if(level > MAX_LEVEL); /* switch state to game completed" */
         loadMap();
     }
+
     private void loadMap(){
         map = new Map(game, "res/maps/map" + level + ".txt");
     }
