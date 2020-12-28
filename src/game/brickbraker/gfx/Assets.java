@@ -16,7 +16,7 @@ public class Assets {
     }
 
 
-    private Font font28;
+    private Font font26;
     private BufferedImage border;
     private BufferedImage heartImg;
     private HashMap<Integer, HashMap<Integer, BufferedImage>> bricksByGameLevel;
@@ -27,7 +27,7 @@ public class Assets {
         final int HEART_WIDTH = 153, HEART_HEIGHT = 146;
         final int HEART_START_X = 44, HEART_START_Y = 54;
 
-        font28 = FontLoader.getInstance().loadFont("res/fonts/Teko-Light.ttf", 26);
+        font26 = FontLoader.getInstance().loadFont("res/fonts/Teko-Light.ttf", 26);
 
         bricksByGameLevel = new HashMap<>();
 
@@ -100,7 +100,7 @@ public class Assets {
 
     public BufferedImage getHeartImg(){return heartImg;}
 
-    public Font getFont28(){
-        return font28;
+    public Font getFont26(){
+        return font26;
     }
 }

@@ -82,7 +82,7 @@ public class Map {
     }
 
     private void drawScore(Graphics g){
-        Text.getInstance().test(g, "score: " + player.getScore(), xInfoPanel, 0, yInfoPanel, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont28());
+        Text.getInstance().drawText(g, "score: " + player.getScore(), xInfoPanel, 0, yInfoPanel, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont28());
     }
 
     private void drawBorder(Graphics g){
