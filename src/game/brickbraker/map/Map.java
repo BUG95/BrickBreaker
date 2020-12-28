@@ -97,7 +97,7 @@ public class Map {
     }
 
     private void drawCurrentLevel(Graphics g){
-        Text.getInstance().drawText(g, "Level: " + game.getGameState().getLevel(), xInfoPanel,null, null, yInfoPanel, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont26());
+        Text.getInstance().drawText(g, "Level: " + game.getGameState().getLevel(), xInfoPanel,null, null, yInfoPanel, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont24());
     }
 
     public BrickManager getBrickManager(){
