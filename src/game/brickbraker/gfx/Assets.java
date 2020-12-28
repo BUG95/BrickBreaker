@@ -19,34 +19,27 @@ public class Assets {
     private Font font26;
     private BufferedImage border;
     private BufferedImage heartImg;
+    private HashMap<Integer, HashMap<Integer, BufferedImage>> ballByGameLevel;
     private HashMap<Integer, HashMap<Integer, BufferedImage>> bricksByGameLevel;
 
-    public void init(){
-        final int BRICK_WIDTH = 16, BRICK_HEIGHT = 8;
-        final int BRICK_SHEET_WIDTH = 20, BRICK_SHEET_HEIGHT = 32; // 20 rows and 32 cols
-        final int HEART_WIDTH = 153, HEART_HEIGHT = 146;
-        final int HEART_START_X = 44, HEART_START_Y = 54;
 
+    private void initFont(){
         font26 = FontLoader.getInstance().loadFont("res/fonts/Teko-Light.ttf", 26);
+    }
 
+    private void initBrick(){
+        final int BRICK_WIDTH = 16, BRICK_HEIGHT = 8;
+        final int BRICK_SHEET_WIDTH = 20, BRICK_SHEET_HEIGHT = 32; // 20 cols and 32 rows
         bricksByGameLevel = new HashMap<>();
 
         HashMap<Integer, BufferedImage> bricksForGameLevel1, bricksForGameLevel2,
-                                        bricksForGameLevel3, bricksForGameLevel4, bricksForGameLevel5;
+                bricksForGameLevel3, bricksForGameLevel4, bricksForGameLevel5;
 
         bricksForGameLevel1 = new HashMap<>();
         bricksForGameLevel2 = new HashMap<>();
         bricksForGameLevel3 = new HashMap<>();
         bricksForGameLevel4 = new HashMap<>();
         bricksForGameLevel5 = new HashMap<>();
-
-        ///////
-        border = ImageLoader.getInstance().loadImage("/textures/gameBorder.png");
-
-        SpriteSheet heartSpriteSheet = new SpriteSheet(ImageLoader.getInstance().loadImage("/textures/heart.png"));
-        heartImg = heartSpriteSheet.crop(HEART_START_X, HEART_START_Y, HEART_WIDTH, HEART_HEIGHT);
-
-        //////
 
         SpriteSheet sheet = new SpriteSheet(ImageLoader.getInstance().loadImage("/textures/bricks.png"));
         BufferedImage[][] bricks = new BufferedImage[BRICK_SHEET_WIDTH][BRICK_SHEET_HEIGHT];
@@ -90,6 +83,75 @@ public class Assets {
         bricksByGameLevel.put(5, bricksForGameLevel5); // game level 5
     }
 
+    private void initBall(){
+        // ball by level
+        final int BALL_WIDTH = 55, BALL_HEIGHT = 53;
+        final int BALL_SHEET_WIDTH = 3, BALL_SHEET_HEIGHT = 5;
+        BufferedImage[][] ball = new BufferedImage[BALL_SHEET_WIDTH][BALL_SHEET_HEIGHT];
+        ballByGameLevel = new HashMap<>();
+        SpriteSheet ballSpriteSheet = new SpriteSheet(ImageLoader.getInstance().loadImage("/textures/ball.png"));
+
+
+        // only for 5 levels
+        for(int i = 0; i < BALL_SHEET_WIDTH; i++){
+            for(int j = 0; j < BALL_SHEET_HEIGHT; j++){
+                ball[i][j] = ballSpriteSheet.crop(i * BALL_WIDTH, j * BALL_HEIGHT, BALL_WIDTH, BALL_HEIGHT);
+            }
+        }
+
+        HashMap<Integer, BufferedImage> ballForGameLevel1, ballForGameLevel2, ballForGameLevel3, ballForGameLevel4, ballForGameLevel5;
+        ballForGameLevel1 = new HashMap<>();
+        ballForGameLevel2 = new HashMap<>();
+        ballForGameLevel3 = new HashMap<>();
+        ballForGameLevel4 = new HashMap<>();
+        ballForGameLevel5 = new HashMap<>();
+
+        ballForGameLevel1.put(1, ball[0][0]);
+        ballForGameLevel1.put(2, ball[1][0]);
+        ballForGameLevel1.put(3, ball[2][0]);
+
+        ballForGameLevel2.put(1, ball[0][1]);
+        ballForGameLevel2.put(2, ball[1][1]);
+        ballForGameLevel2.put(3, ball[2][1]);
+
+        ballForGameLevel3.put(1, ball[0][2]);
+        ballForGameLevel3.put(2, ball[1][2]);
+        ballForGameLevel3.put(3, ball[2][2]);
+
+        ballForGameLevel4.put(1, ball[0][3]);
+        ballForGameLevel4.put(2, ball[1][3]);
+        ballForGameLevel4.put(3, ball[2][3]);
+
+        ballForGameLevel5.put(1, ball[0][4]);
+        ballForGameLevel5.put(2, ball[1][4]);
+        ballForGameLevel5.put(3, ball[2][4]);
+
+        ballByGameLevel.put(1, ballForGameLevel1);
+        ballByGameLevel.put(2, ballForGameLevel2);
+        ballByGameLevel.put(3, ballForGameLevel3);
+        ballByGameLevel.put(4, ballForGameLevel4);
+        ballByGameLevel.put(5, ballForGameLevel5);
+    }
+
+    private void initBorder(){
+        border = ImageLoader.getInstance().loadImage("/textures/gameBorder.png");
+    }
+
+    private void initHeart(){
+        final int HEART_WIDTH = 153, HEART_HEIGHT = 146;
+        final int HEART_START_X = 44, HEART_START_Y = 54;
+        SpriteSheet heartSpriteSheet = new SpriteSheet(ImageLoader.getInstance().loadImage("/textures/heart.png"));
+        heartImg = heartSpriteSheet.crop(HEART_START_X, HEART_START_Y, HEART_WIDTH, HEART_HEIGHT);
+    }
+
+    public void init(){
+        initBorder();
+        initHeart();
+        initFont();
+        initBrick();
+        initBall();
+    }
+
     public BufferedImage getBrickLevelByGameLevel(int gameLevel, int brickLevel){
         return bricksByGameLevel.get(gameLevel).get(brickLevel);
     }
@@ -99,6 +161,10 @@ public class Assets {
     }
 
     public BufferedImage getHeartImg(){return heartImg;}
+
+    public BufferedImage getBallByGameLevel(int gameLevel, int ballLevel){
+        return ballByGameLevel.get(gameLevel).get(ballLevel);
+    }
 
     public Font getFont26(){
         return font26;

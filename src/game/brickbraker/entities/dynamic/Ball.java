@@ -2,6 +2,7 @@ package game.brickbraker.entities.dynamic;
 
 import game.brickbraker.Game;
 import game.brickbraker.entities.fixed.Brick;
+import game.brickbraker.gfx.Assets;
 
 import java.awt.*;
 
@@ -13,7 +14,7 @@ public class Ball extends DynamicEntity {
     private boolean moveSlow;
     private boolean isX = false;
     public Ball(Game game, float x, float y) {
-        super(game, x, y, BALL_WIDTH, BALL_HEIGHT, false);
+        super(game, x, y, BALL_WIDTH, BALL_HEIGHT, false, 1);
         resetDirections();
 
     }
@@ -187,8 +188,6 @@ public class Ball extends DynamicEntity {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillOval((int)x, (int)y, (int)BALL_WIDTH, (int)BALL_HEIGHT);
-        g.setColor(Color.BLUE);
+        g.drawImage(Assets.getInstance().getBallByGameLevel(game.getGameState().getLevel(), level), (int)x, (int)y, (int)BALL_WIDTH, (int)BALL_HEIGHT, null);
     }
 }

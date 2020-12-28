@@ -8,11 +8,9 @@ import java.awt.*;
 public class Brick extends FixedEntity {
     public static final float BRICK_WIDTH = 30, BRICK_HEIGHT = 15;
     private boolean isHit = false;
-    private int level;
 
     public Brick(Game game, float x, float y, int level) {
-        super(game, x, y, BRICK_WIDTH, BRICK_HEIGHT);
-        this.level = level;
+        super(game, x, y, BRICK_WIDTH, BRICK_HEIGHT, level);
     }
 
     @Override

@@ -7,8 +7,8 @@ public abstract class DynamicEntity extends Entity {
 
     protected boolean isActive;
 
-    public DynamicEntity(Game game, float x, float y, float width, float height, boolean isActive) {
-        super(game, x, y, width, height);
+    public DynamicEntity(Game game, float x, float y, float width, float height, boolean isActive, int level) {
+        super(game, x, y, width, height, level);
         this.isActive = isActive;
     }
 

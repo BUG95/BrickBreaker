@@ -12,7 +12,7 @@ public class Player extends DynamicEntity {
     private long score = 0;
 
     public Player(Game game, float x, float y) {
-        super(game, x, y, PLAYER_WIDTH, PLAYER_HEIGHT, true);
+        super(game, x, y, PLAYER_WIDTH, PLAYER_HEIGHT, true, 1);
     }
 
     @Override

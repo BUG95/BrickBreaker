@@ -8,14 +8,16 @@ public abstract class Entity {
     protected float x, y;
     protected float width, height;
     protected Game game;
-    protected Rectangle bounds;
+    private Rectangle bounds;
+    protected int level;
 
-    public Entity(Game game, float x, float y, float width, float height){
+    public Entity(Game game, float x, float y, float width, float height, int level){
         this.game = game;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.level = level;
         bounds = new Rectangle((int)x, (int)y, (int)width, (int)height);
     }
 
@@ -41,5 +43,19 @@ public abstract class Entity {
 
     public float getY(){
         return y;
+    }
+
+    public void increaseLevel(){
+        level ++;
+    }
+
+    public void decreaseLevel(){
+        if(level > 0){
+            level--;
+        }
+    }
+
+    public int getLevel(){
+        return level;
     }
 }
