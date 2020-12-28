@@ -7,8 +7,9 @@ import java.awt.*;
 public class Player extends DynamicEntity {
 
     public static final float PLAYER_WIDTH = 80, PLAYER_HEIGHT = 10, PLAYER_Y_OFFSET = 20;
-    private static final int PLAYER_SPEED = 5;
+    private static final int PLAYER_SPEED = 6;
     private int lives = 3;
+    private long score = 0;
 
     public Player(Game game, float x, float y) {
         super(game, x, y, PLAYER_WIDTH, PLAYER_HEIGHT, true);
@@ -54,5 +55,13 @@ public class Player extends DynamicEntity {
 
     public void decreaseLives(){
         lives--;
+    }
+
+    public void addToScore(int amt){
+        score += amt;
+    }
+
+    public long getScore() {
+        return score;
     }
 }

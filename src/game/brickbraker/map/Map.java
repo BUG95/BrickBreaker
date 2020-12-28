@@ -6,14 +6,14 @@ import game.brickbraker.entities.dynamic.Player;
 import game.brickbraker.entities.fixed.Brick;
 import game.brickbraker.entities.fixed.BrickManager;
 import game.brickbraker.gfx.Assets;
+import game.brickbraker.gfx.Text;
 import game.brickbraker.utils.Utils;
 
 import java.awt.*;
 
 public class Map {
-    private int width, height;
     private int topBorderHeight, rightBorderWidth, bottomBorderHeight, leftBorderWidth;
-    private int topBorderInfoPanelHeight, rightBorderInfoPanelWidth, bottomBorderInfoPanelHeight, leftBorderInfoPanelWidth;
+    private int yInfoPanel, infoPanelWidth, infoPanelHeight, xInfoPanel;
     private int heartWidth, heartHeight;
     private Game game;
     private BrickManager brickManager;
@@ -38,18 +38,18 @@ public class Map {
         bottomBorderHeight = Utils.parseInt(tokens[2]);
         leftBorderWidth = Utils.parseInt(tokens[3]);
 
-        topBorderInfoPanelHeight = Utils.parseInt(tokens[4]);
-        rightBorderInfoPanelWidth = Utils.parseInt(tokens[5]);
-        bottomBorderInfoPanelHeight = Utils.parseInt(tokens[6]);
-        leftBorderInfoPanelWidth = Utils.parseInt(tokens[7]);
+        yInfoPanel = Utils.parseInt(tokens[4]);
+        infoPanelWidth = Utils.parseInt(tokens[5]);
+        infoPanelHeight = Utils.parseInt(tokens[6]);
+        xInfoPanel = Utils.parseInt(tokens[7]);
 
         heartWidth = Utils.parseInt(tokens[8]);
         heartHeight = Utils.parseInt(tokens[9]);
 
-        width = Utils.parseInt(tokens[10]);
-        height = Utils.parseInt(tokens[11]);
+        int width = Utils.parseInt(tokens[10]);
+        int height = Utils.parseInt(tokens[11]);
 
-        int xStartPos = 0, yStartPos = topBorderHeight + heartHeight + 10, xOffset, yOffset;
+        int xStartPos = 0, yStartPos = topBorderHeight + (int)Brick.BRICK_HEIGHT, xOffset, yOffset;
         xOffset = (int)Brick.BRICK_WIDTH + 5;
         yOffset = (int)Brick.BRICK_HEIGHT + 5;
 
@@ -72,13 +72,27 @@ public class Map {
     }
 
     public void render(Graphics g){
-        g.drawImage(Assets.getInstance().getLevelBorder(), 0,0, null);
-        for(int i = 1; i <= player.getLives(); i++){
-            g.drawImage(Assets.getInstance().getHeartImg(), game.getDisplay().getCanvas().getWidth()  - rightBorderInfoPanelWidth - i * heartWidth, (topBorderInfoPanelHeight + bottomBorderInfoPanelHeight) / 2 - heartHeight / 2, heartWidth, heartHeight,null);
-        }
+        drawBorder(g);
+        drawLives(g);
+        drawScore(g);
         brickManager.render(g);
         player.render(g);
         ball.render(g);
+
+    }
+
+    private void drawScore(Graphics g){
+        Text.getInstance().test(g, "score: " + player.getScore(), xInfoPanel, 0, yInfoPanel, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont28());
+    }
+
+    private void drawBorder(Graphics g){
+        g.drawImage(Assets.getInstance().getLevelBorder(), 0,0, null);
+    }
+
+    private void drawLives(Graphics g){
+        for(int i = 1; i <= player.getLives(); i++){
+            g.drawImage(Assets.getInstance().getHeartImg(), xInfoPanel + infoPanelWidth - i * heartWidth, yInfoPanel + (infoPanelHeight - heartHeight) / 2, heartWidth, heartHeight, null);
+        }
     }
 
     public BrickManager getBrickManager(){

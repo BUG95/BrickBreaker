@@ -26,6 +26,10 @@ public class Ball extends DynamicEntity {
         moveSlow = false;
     }
 
+    private void addToPlayerScore(int amt){
+        game.getGameState().getMap().getPlayer().addToScore(amt);
+    }
+
     private void checkCollisions(){
         if (checkCollisionWith(game.getGameState().getMap().getPlayer())){
             resetDirections();
@@ -60,6 +64,7 @@ public class Ball extends DynamicEntity {
         for(Brick b : game.getGameState().getMap().getBrickManager().getBricks())
             if(checkCollisionWith(b)){
                 b.setHit(true);
+                addToPlayerScore(b.getLevel());
                 // temp code
                 if(isX) return;
                 //
@@ -159,12 +164,16 @@ public class Ball extends DynamicEntity {
         return (game.getGameState().getMap().getBrickManager().getAvailableBricks() == 0);
     }
 
+    private void nextLevel(){
+        int currentLives = game.getGameState().getMap().getPlayer().getLives();
+        game.getGameState().levelUp();
+        game.getGameState().getMap().getPlayer().setLives(currentLives);
+    }
+
     @Override
     public void tick() {
         if(levelCompleted()){
-            int currentLives = game.getGameState().getMap().getPlayer().getLives();
-            game.getGameState().levelUp();
-            game.getGameState().getMap().getPlayer().setLives(currentLives);
+            nextLevel();
             return;
         }
         checkInput();

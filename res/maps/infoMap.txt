@@ -1,5 +1,5 @@
 [top border frame height] [right border frame width] [bottom border frame height] [left border frame width]
-[top border info panel height including top border frame height] [right border info panel including right border frame width] [...] [...]
+[start y info panel] [info panel width] [info panel height] [start x info panel]
 [heart width] [heart height]
 [number of rows for bricks] [number of cols for bricks]
 [bricks according to rows and cols, each brick has a specific level]
