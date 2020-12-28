@@ -12,14 +12,22 @@ public class Text {
         return text;
     }
 
-    public void drawText(Graphics g, String text, int x, int xOffset, int y, int height, Color color, Font font){
+    public void drawText(Graphics g, String text, int x, String xOffsetText, Font xOffsetFont, int y, int height, Color color, Font font){
         g.setColor(color);
         g.setFont(font);
         FontMetrics fm = g.getFontMetrics(font);
 
+        int xPos, yPos;
         int width = fm.stringWidth(text);
-        int xPos = x + xOffset + (width - fm.stringWidth(text)) / 2;
-        int yPos = y + (height - fm.getHeight()) / 2 + fm.getAscent();
+
+        if(xOffsetText != null){
+            FontMetrics xOffsetFontMetrics = g.getFontMetrics(xOffsetFont);
+            xPos = x + xOffsetFontMetrics.stringWidth(xOffsetText) + (width - fm.stringWidth(text)) / 2;
+        } else {
+            xPos = x + (width - fm.stringWidth(text)) / 2;
+        }
+
+        yPos = y + (height - fm.getHeight()) / 2 + fm.getAscent();
 
         g.drawString(text, xPos, yPos);
     }

@@ -74,6 +74,7 @@ public class Map {
     public void render(Graphics g){
         drawBorder(g);
         drawLives(g);
+        drawCurrentLevel(g);
         drawScore(g);
         brickManager.render(g);
         player.render(g);
@@ -82,7 +83,7 @@ public class Map {
     }
 
     private void drawScore(Graphics g){
-        Text.getInstance().drawText(g, "score: " + player.getScore(), xInfoPanel, 0, yInfoPanel, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont26());
+        Text.getInstance().drawText(g, "Score: " + player.getScore(), xInfoPanel, null,null, yInfoPanel + infoPanelHeight / 2, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont26());
     }
 
     private void drawBorder(Graphics g){
@@ -93,6 +94,10 @@ public class Map {
         for(int i = 1; i <= player.getLives(); i++){
             g.drawImage(Assets.getInstance().getHeartImg(), xInfoPanel + infoPanelWidth - i * heartWidth, yInfoPanel + (infoPanelHeight - heartHeight) / 2, heartWidth, heartHeight, null);
         }
+    }
+
+    private void drawCurrentLevel(Graphics g){
+        Text.getInstance().drawText(g, "Level: " + game.getGameState().getLevel(), xInfoPanel,null, null, yInfoPanel, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont26());
     }
 
     public BrickManager getBrickManager(){
