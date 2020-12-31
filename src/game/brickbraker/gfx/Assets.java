@@ -16,7 +16,7 @@ public class Assets {
     }
 
 
-    private Font font26, font24;
+    private Font font26, font24, font90;
     private BufferedImage border;
     private BufferedImage heartImg;
     private HashMap<Integer, HashMap<Integer, BufferedImage>> ballByGameLevel;
@@ -24,8 +24,10 @@ public class Assets {
 
 
     private void initFont(){
-        font26 = FontLoader.getInstance().loadFont("res/fonts/Teko-Light.ttf", 26);
+        font26 = FontLoader.getInstance().loadFont("res/fonts/Teko-Light.ttf", 26
+        );
         font24 = FontLoader.getInstance().loadFont("res/fonts/Teko-Light.ttf", 24);
+        font90 = FontLoader.getInstance().loadFont("res/fonts/Teko-Light.ttf", 90);
     }
 
     private void initBrick(){
@@ -173,4 +175,8 @@ public class Assets {
     public Font getFont24(){
         return font24;
     }
+    public Font getFont90(){
+        return font90;
+    }
+
 }

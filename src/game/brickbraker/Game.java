@@ -2,7 +2,9 @@ package game.brickbraker;
 
 import game.brickbraker.display.Display;
 import game.brickbraker.input.KeyManager;
+import game.brickbraker.input.MouseManager;
 import game.brickbraker.states.GameState;
+import game.brickbraker.states.MenuState;
 import game.brickbraker.states.State;
 import game.brickbraker.states.StateManager;
 
@@ -20,22 +22,31 @@ public class Game implements Runnable {
     private Graphics g;
     // key manager
     private KeyManager keyManager;
+    // mouse manager
+    private MouseManager mouseManager;
     // states
     private State gameState;
+    private State menuState;
 
     public Game(String title, int width, int height){
         this.title = title;
         this.width = width;
         this.height = height;
         keyManager = new KeyManager();
+        mouseManager = new MouseManager();
         displayInit();
         gameState = new GameState(this);
-        StateManager.getInstance().setCurrentState(gameState);
+        menuState = new MenuState(this);
+        StateManager.getInstance().setCurrentState(menuState);
     }
 
     private void displayInit(){
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
+        display.getFrame().addMouseListener(mouseManager);
+        display.getFrame().addMouseMotionListener(mouseManager);
+        display.getCanvas().addMouseListener(mouseManager);
+        display.getCanvas().addMouseMotionListener(mouseManager);
     }
 
     public void tick(){
@@ -120,6 +131,10 @@ public class Game implements Runnable {
 
     public GameState getGameState(){
         return (GameState) gameState;
+    }
+
+    public MouseManager getMouseManager(){
+        return mouseManager;
     }
 
 }
