@@ -11,7 +11,7 @@ public class Gift extends DynamicEntity implements Runnable{
 
     public static final int AVAILABLE_GIFTS = 4;
     public static boolean limitedGift = false;
-    private final int DEFAULT_SECONDS_ACTIVE = 10;
+    private final int DEFAULT_ACTIVE_SECONDS = 10;
     private String name;
     public static Thread thread;
 
@@ -88,7 +88,7 @@ public class Gift extends DynamicEntity implements Runnable{
         final int ONE_SECOND = 1000;
         game.getGameState().getMap().setGiftName(name);
 
-        for(int i = 0; i < DEFAULT_SECONDS_ACTIVE; i++){
+        for(int i = 0; i < DEFAULT_ACTIVE_SECONDS; i++){
             game.getGameState().getMap().setGiftActiveSeconds(String.valueOf(10 - i));
             try {
                 Thread.sleep(ONE_SECOND);
