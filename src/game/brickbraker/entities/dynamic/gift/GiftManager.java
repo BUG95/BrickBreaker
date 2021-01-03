@@ -41,13 +41,4 @@ public class GiftManager {
         }
         return false;
     }
-
-    public boolean isLimitedGift(){
-        for(Gift gift : gifts){
-            if(gift.isLimitedGift()){
-                return true;
-            }
-        }
-        return false;
-    }
 }

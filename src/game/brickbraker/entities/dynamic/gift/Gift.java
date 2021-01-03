@@ -10,7 +10,7 @@ import java.awt.*;
 public class Gift extends DynamicEntity implements Runnable{
 
     public static final int AVAILABLE_GIFTS = 4;
-    private boolean limitedGift = false;
+    public static boolean limitedGift = false;
     private final int DEFAULT_SECONDS_ACTIVE = 10;
     private String name;
     private Thread thread;
@@ -107,9 +107,5 @@ public class Gift extends DynamicEntity implements Runnable{
         limitedGift = false;
         game.getGameState().getMap().setGiftName("");
         game.getGameState().getMap().setGiftActiveSeconds("");
-    }
-
-    public boolean isLimitedGift() {
-        return limitedGift;
     }
 }
