@@ -13,4 +13,6 @@ public abstract class DynamicEntity extends Entity {
     }
 
     public abstract void move();
+    public void setWidth(float width){this.width = width;}
+    public float getWidth(){return width;}
 }

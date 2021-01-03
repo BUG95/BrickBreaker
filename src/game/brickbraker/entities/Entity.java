@@ -55,6 +55,10 @@ public abstract class Entity {
         }
     }
 
+    public void setLevel(int level){
+        this.level = level;
+    }
+
     public int getLevel(){
         return level;
     }

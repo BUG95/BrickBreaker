@@ -113,7 +113,7 @@ class DrawPanel extends JPanel implements Runnable{
     public void run() {
         if(isRunning){
             fm = getFontMetrics(font);
-            drawBeforeName("Game Creator:");
+            drawBeforeName("Game Created By");
             yName += fm.getHeight();
             drawName("Butnaru Gheorghita");
             stop();

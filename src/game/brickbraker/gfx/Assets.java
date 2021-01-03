@@ -21,6 +21,7 @@ public class Assets {
     private BufferedImage heartImg;
     private HashMap<Integer, HashMap<Integer, BufferedImage>> ballByGameLevel;
     private HashMap<Integer, HashMap<Integer, BufferedImage>> bricksByGameLevel;
+    private HashMap<Integer, BufferedImage> giftByLevel;
 
 
     private void initFont(){
@@ -109,6 +110,7 @@ public class Assets {
         ballForGameLevel4 = new HashMap<>();
         ballForGameLevel5 = new HashMap<>();
 
+        //ballForGameLevel1.put(1, ImageLoader.getInstance().loadImage("/textures/fireBall.png"));
         ballForGameLevel1.put(1, ball[0][0]);
         ballForGameLevel1.put(2, ball[1][0]);
         ballForGameLevel1.put(3, ball[2][0]);
@@ -147,12 +149,22 @@ public class Assets {
         heartImg = heartSpriteSheet.crop(HEART_START_X, HEART_START_Y, HEART_WIDTH, HEART_HEIGHT);
     }
 
+    private void initGift(){
+        giftByLevel = new HashMap<>();
+        giftByLevel.put(1, heartImg);
+        giftByLevel.put(2, ImageLoader.getInstance().loadImage("/textures/fireBall.png"));
+        giftByLevel.put(3, ImageLoader.getInstance().loadImage("/textures/lightning.png"));
+        giftByLevel.put(4, ImageLoader.getInstance().loadImage("/textures/arrow.png"));
+
+    }
+
     public void init(){
         initBorder();
         initHeart();
         initFont();
         initBrick();
         initBall();
+        initGift();
     }
 
     public BufferedImage getBrickLevelByGameLevel(int gameLevel, int brickLevel){
@@ -167,6 +179,10 @@ public class Assets {
 
     public BufferedImage getBallByGameLevel(int gameLevel, int ballLevel){
         return ballByGameLevel.get(gameLevel).get(ballLevel);
+    }
+
+    public BufferedImage getGiftByLevel(int giftLevel){
+        return giftByLevel.get(giftLevel);
     }
 
     public Font getFont26(){

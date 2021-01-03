@@ -43,6 +43,7 @@ public class Game implements Runnable {
     private void displayInit(){
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
+        display.getCanvas().addKeyListener(keyManager);
         display.getFrame().addMouseListener(mouseManager);
         display.getFrame().addMouseMotionListener(mouseManager);
         display.getCanvas().addMouseListener(mouseManager);

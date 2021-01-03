@@ -9,14 +9,15 @@ import java.awt.*;
 public class Ball extends DynamicEntity {
 
     public static final float BALL_WIDTH = 14, BALL_HEIGHT = 14;
+    public static final int REGULARBALL_ID = 1, FIREBALL_ID = 2;
     private final int BALL_SPEED = 5;
+    private int giftBallSpeed = 0;
     private boolean leftDirection, rightDirection, upDirection, downDirection;
     private boolean moveSlow;
-    private boolean isX = false;
+    private boolean cancelDirections = false;
     public Ball(Game game, float x, float y) {
-        super(game, x, y, BALL_WIDTH, BALL_HEIGHT, false, 1);
+        super(game, x, y, BALL_WIDTH, BALL_HEIGHT, false, REGULARBALL_ID);
         resetDirections();
-
     }
 
     private void resetDirections(){
@@ -38,7 +39,7 @@ public class Ball extends DynamicEntity {
             // playerWidth ->  [[l1][l2][c][r2][r1]]
             float l1, l2, c, r2, ballX;
             float playerX = game.getGameState().getMap().getPlayer().getX();
-            float offset = Player.PLAYER_WIDTH / 5;
+            float offset = game.getGameState().getMap().getPlayer().getWidth() / 5;
 
             l1 = playerX +   offset;
             l2 = playerX + 2*offset;
@@ -66,9 +67,7 @@ public class Ball extends DynamicEntity {
             if(checkCollisionWith(b)){
                 b.setHit(true);
                 addToPlayerScore(b.getLevel());
-                // temp code
-                if(isX) return;
-                //
+                if(cancelDirections) return; //from gift -> fireball
                 if(downDirection){
                     downDirection = false;
                     upDirection = true;
@@ -91,7 +90,7 @@ public class Ball extends DynamicEntity {
 
     private void moveUp(){
         if(upDirection) {
-            y -= BALL_SPEED;
+            y -= BALL_SPEED + giftBallSpeed;
             if(y < game.getGameState().getMap().getTopBorderHeight()){
                 upDirection = false;
                 downDirection = true;
@@ -101,7 +100,7 @@ public class Ball extends DynamicEntity {
 
     private void moveDown(){
         if(downDirection) {
-            y += BALL_SPEED;
+            y += BALL_SPEED + giftBallSpeed;
             if(y > game.getGameState().getMap().getPlayer().getY() + Player.PLAYER_HEIGHT){
                 game.getGameState().getMap().getPlayer().decreaseLives();
                 isActive = false;
@@ -113,9 +112,9 @@ public class Ball extends DynamicEntity {
 
     private void moveLeft(){
         if(leftDirection) {
-            float speed = BALL_SPEED;
+            float speed = BALL_SPEED + giftBallSpeed;
             if(moveSlow) {
-                speed = BALL_SPEED - BALL_SPEED / 2.0f;
+                speed = speed - speed / 2.0f;
             }
             if(x - game.getGameState().getMap().getLeftBorderWidth() - speed < 0){
                 leftDirection = false;
@@ -123,30 +122,31 @@ public class Ball extends DynamicEntity {
                 return;
             }
             if(moveSlow){
-                x -= BALL_SPEED - BALL_SPEED / 2.0f;
+                x -= speed - speed / 2.0f;
                 return;
             }
-            x -= BALL_SPEED;
+            x -= BALL_SPEED + giftBallSpeed;
         }
     }
 
     private void moveRight(){
         if(rightDirection) {
+            int speed = BALL_SPEED + giftBallSpeed;
             if(x >= game.getDisplay().getCanvas().getWidth() - BALL_WIDTH - game.getGameState().getMap().getRightBorderWidth()){
                 rightDirection = false;
                 leftDirection = true;
                 return;
             }
             if(moveSlow){
-                x += BALL_SPEED - BALL_SPEED / 2.0f;
+                x += speed - speed / 2.0f;
                 return;
             }
-            x += BALL_SPEED;
+            x += speed;
         }
     }
 
     private void followPlayer(){
-         x = game.getGameState().getMap().getPlayer().getX() + Player.PLAYER_WIDTH / 2 - Ball.BALL_WIDTH / 2;
+         x = game.getGameState().getMap().getPlayer().getX() + game.getGameState().getMap().getPlayer().getWidth() / 2 - Ball.BALL_WIDTH / 2;
          y = game.getGameState().getMap().getPlayer().getY() - Ball.BALL_HEIGHT;
     }
 
@@ -156,7 +156,6 @@ public class Ball extends DynamicEntity {
         }
         // temp code
         if(game.getKeyManager().x){
-            isX = true;
         }
         //
     }
@@ -189,5 +188,13 @@ public class Ball extends DynamicEntity {
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.getInstance().getBallByGameLevel(game.getGameState().getLevel(), level), (int)x, (int)y, (int)BALL_WIDTH, (int)BALL_HEIGHT, null);
+    }
+
+    public void setCancelDirections(boolean value){
+        cancelDirections = value;
+    }
+
+    public void setGiftBallSpeed(int speed){
+        giftBallSpeed = speed;
     }
 }

@@ -3,6 +3,7 @@ package game.brickbraker.map;
 import game.brickbraker.Game;
 import game.brickbraker.entities.dynamic.Ball;
 import game.brickbraker.entities.dynamic.Player;
+import game.brickbraker.entities.dynamic.gift.GiftManager;
 import game.brickbraker.entities.fixed.Brick;
 import game.brickbraker.entities.fixed.BrickManager;
 import game.brickbraker.gfx.Assets;
@@ -19,13 +20,18 @@ public class Map {
     private BrickManager brickManager;
     private Player player;
     private Ball ball;
+    private GiftManager giftManager;
+    private String giftName = "", giftActiveSeconds = "";
+    private FontMetrics fm;
 
     public Map(Game game, String path){
         this.game = game;
         brickManager = new BrickManager(game);
         player = new Player(game, (float)game.getDisplay().getCanvas().getWidth() / 2 - Player.PLAYER_WIDTH / 2, game.getDisplay().getCanvas().getHeight() - Player.PLAYER_Y_OFFSET);
         ball = new Ball(game,-1,-1);
+        giftManager = new GiftManager();
         loadMap(path);
+        fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
     }
 
     private void loadMap(String path){
@@ -68,6 +74,7 @@ public class Map {
     public void tick(){
         brickManager.tick();
         player.tick();
+        giftManager.tick();
         ball.tick();
     }
 
@@ -76,14 +83,26 @@ public class Map {
         drawLives(g);
         drawCurrentLevel(g);
         drawScore(g);
+        drawGiftName(g);
+        drawGiftActiveSeconds(g);
         brickManager.render(g);
         player.render(g);
+        giftManager.render(g);
         ball.render(g);
+    }
 
+    private void drawGiftName(Graphics g){
+        //FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
+        Text.getInstance().drawText(g, giftName, (infoPanelWidth - fm.stringWidth(giftName)) / 2, yInfoPanel + (infoPanelHeight - fm.getHeight()) / 2, infoPanelHeight, Color.ORANGE, Assets.getInstance().getFont26());
+    }
+
+    private void drawGiftActiveSeconds(Graphics g){
+        //FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
+        Text.getInstance().drawText(g, giftActiveSeconds, fm.stringWidth(giftName) + (infoPanelWidth - fm.stringWidth(giftName)) / 2 + 5, yInfoPanel + (infoPanelHeight - fm.getHeight()) / 2, infoPanelHeight, Color.ORANGE, Assets.getInstance().getFont26());
     }
 
     private void drawScore(Graphics g){
-        Text.getInstance().drawText(g, "Score: " + player.getScore(), xInfoPanel, null,null, yInfoPanel + infoPanelHeight / 2, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont26());
+        Text.getInstance().drawText(g, "Score: " + player.getScore(), xInfoPanel, yInfoPanel + infoPanelHeight / 2, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont26());
     }
 
     private void drawBorder(Graphics g){
@@ -97,7 +116,7 @@ public class Map {
     }
 
     private void drawCurrentLevel(Graphics g){
-        Text.getInstance().drawText(g, "Level: " + game.getGameState().getLevel(), xInfoPanel,null, null, yInfoPanel, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont24());
+        Text.getInstance().drawText(g, "Level: " + game.getGameState().getLevel(), xInfoPanel, yInfoPanel, infoPanelHeight / 2, Color.ORANGE, Assets.getInstance().getFont24());
     }
 
     public BrickManager getBrickManager(){
@@ -120,5 +139,17 @@ public class Map {
 
     public int getLeftBorderWidth() {
         return leftBorderWidth;
+    }
+
+    public GiftManager getGiftManager(){
+        return giftManager;
+    }
+
+    public void setGiftName(String giftName){
+        this.giftName = giftName;
+    }
+
+    public void setGiftActiveSeconds(String seconds){
+        giftActiveSeconds = seconds;
     }
 }

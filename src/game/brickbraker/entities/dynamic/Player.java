@@ -7,7 +7,9 @@ import java.awt.*;
 public class Player extends DynamicEntity {
 
     public static final float PLAYER_WIDTH = 80, PLAYER_HEIGHT = 10, PLAYER_Y_OFFSET = 20;
-    private static final int PLAYER_SPEED = 6;
+    private static final int DEFAULT_PLAYER_SPEED = 6;
+    private int giftPlayerSpeed = 0;
+    private final int MAX_LIVES = 3;
     private int lives = 3;
     private long score = 0;
 
@@ -25,13 +27,13 @@ public class Player extends DynamicEntity {
     }
 
     private void moveLeft(){
-        if(x - game.getGameState().getMap().getLeftBorderWidth() - PLAYER_SPEED < 0) return;
-        x -= PLAYER_SPEED;
+        if(x - game.getGameState().getMap().getLeftBorderWidth() - DEFAULT_PLAYER_SPEED - giftPlayerSpeed < 0) return;
+        x -= DEFAULT_PLAYER_SPEED + giftPlayerSpeed;
     }
 
     private void moveRight(){
-        if(x >= game.getDisplay().getCanvas().getWidth() - PLAYER_WIDTH - game.getGameState().getMap().getRightBorderWidth()) return;
-        x += PLAYER_SPEED;
+        if(x >= game.getDisplay().getCanvas().getWidth() - width - game.getGameState().getMap().getRightBorderWidth()) return;
+        x += DEFAULT_PLAYER_SPEED + giftPlayerSpeed;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class Player extends DynamicEntity {
     @Override
     public void render(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect((int)x, (int)y, (int)width, (int)height);
+        g.fillRect((int)x, (int)y, (int)(width), (int)height);
     }
 
     public int getLives(){
@@ -54,7 +56,15 @@ public class Player extends DynamicEntity {
     public void setLives(int lives){this.lives=lives;}
 
     public void decreaseLives(){
-        lives--;
+        if(lives > 0){
+            lives--;
+        }
+    }
+
+    public void increaseLives(){
+        if(lives < MAX_LIVES){
+            lives++;
+        }
     }
 
     public void addToScore(int amt){
@@ -64,4 +74,13 @@ public class Player extends DynamicEntity {
     public long getScore() {
         return score;
     }
+
+    public void setGiftPlayerSpeed(int giftPlayerSpeed) {
+        this.giftPlayerSpeed = giftPlayerSpeed;
+    }
+
+    public void setGiftPlayerWidth(float extraPlayerWidth){
+        setWidth(PLAYER_WIDTH + extraPlayerWidth);
+    }
+
 }
