@@ -12,7 +12,7 @@ public class Text {
         return text;
     }
 
-    public void drawText(Graphics g, String text, int x, int y, int height, Color color, Font font){
+    public void drawText(Graphics g, String text, int x, int y, int heightOfComponent, Color color, Font font){
         g.setColor(color);
         g.setFont(font);
         FontMetrics fm = g.getFontMetrics();
@@ -20,7 +20,7 @@ public class Text {
         int xPos, yPos;
 
         xPos = x;
-        yPos = y + (height - fm.getHeight()) / 2 + fm.getAscent();
+        yPos = y + (heightOfComponent - fm.getHeight()) / 2 + fm.getAscent();
 
         g.drawString(text, xPos, yPos);
     }

@@ -1,7 +1,5 @@
 package game.brickbraker.entities.dynamic.gift;
 
-import game.brickbraker.Game;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;

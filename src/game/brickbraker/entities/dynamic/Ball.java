@@ -1,6 +1,7 @@
 package game.brickbraker.entities.dynamic;
 
 import game.brickbraker.Game;
+import game.brickbraker.entities.dynamic.gift.Gift;
 import game.brickbraker.entities.fixed.Brick;
 import game.brickbraker.gfx.Assets;
 
@@ -9,7 +10,7 @@ import java.awt.*;
 public class Ball extends DynamicEntity {
 
     public static final float BALL_WIDTH = 14, BALL_HEIGHT = 14;
-    public static final int REGULARBALL_ID = 1, FIREBALL_ID = 2;
+    public static final int REGULARBALL_ID = 1, FIREBALL_ID = 2, SPEEDBALL_ID = 3;
     private final int BALL_SPEED = 5;
     private int giftBallSpeed = 0;
     private boolean leftDirection, rightDirection, upDirection, downDirection;
@@ -154,10 +155,6 @@ public class Ball extends DynamicEntity {
         if(game.getKeyManager().space){
             isActive = true;
         }
-        // temp code
-        if(game.getKeyManager().x){
-        }
-        //
     }
 
     private boolean levelCompleted(){
@@ -174,6 +171,10 @@ public class Ball extends DynamicEntity {
     public void tick() {
         if(levelCompleted()){
             nextLevel();
+            if(Gift.thread.isAlive()){
+                Gift.thread.stop();
+                Gift.limitedGift = false;
+            }
             return;
         }
         checkInput();

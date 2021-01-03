@@ -13,10 +13,11 @@ public class Gift extends DynamicEntity implements Runnable{
     public static boolean limitedGift = false;
     private final int DEFAULT_SECONDS_ACTIVE = 10;
     private String name;
-    private Thread thread;
+    public static Thread thread;
 
     public Gift(Game game, float x, float y, float width, float height, boolean isActive, int level) {
         super(game, x, y, width, height, isActive, level);
+        thread = new Thread(this);
     }
 
     public void giveTheGift(){
@@ -36,6 +37,7 @@ public class Gift extends DynamicEntity implements Runnable{
             name = "Speed";
             game.getGameState().getMap().getPlayer().setGiftPlayerSpeed(3);
             game.getGameState().getMap().getBall().setGiftBallSpeed(3);
+            game.getGameState().getMap().getBall().setLevel(Ball.SPEEDBALL_ID);
             limitedGift = true;
         } else if(level == 4){
             name = "Extra Width";
@@ -43,7 +45,6 @@ public class Gift extends DynamicEntity implements Runnable{
             limitedGift = true;
         }
         if(limitedGift){
-            thread = new Thread(this);
             thread.start();
         }
     }
@@ -84,19 +85,21 @@ public class Gift extends DynamicEntity implements Runnable{
 
     @Override
     public void run() {
+        final int ONE_SECOND = 1000;
         game.getGameState().getMap().setGiftName(name);
 
         for(int i = 0; i < DEFAULT_SECONDS_ACTIVE; i++){
             game.getGameState().getMap().setGiftActiveSeconds(String.valueOf(10 - i));
             try {
-                Thread.sleep(1000);
+                Thread.sleep(ONE_SECOND);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
+        limitedGift = false;
+
         if(level == 2){
-            game.getGameState().getMap().getBall().setLevel(Ball.REGULARBALL_ID);
             game.getGameState().getMap().getBall().setCancelDirections(false);
         } else if(level == 3){
             game.getGameState().getMap().getPlayer().setGiftPlayerSpeed(0);
@@ -104,8 +107,10 @@ public class Gift extends DynamicEntity implements Runnable{
         } else if(level == 4){
             game.getGameState().getMap().getPlayer().setGiftPlayerWidth(0);
         }
-        limitedGift = false;
+
+        game.getGameState().getMap().getBall().setLevel(Ball.REGULARBALL_ID);
         game.getGameState().getMap().setGiftName("");
         game.getGameState().getMap().setGiftActiveSeconds("");
     }
+
 }

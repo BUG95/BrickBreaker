@@ -22,7 +22,6 @@ public class Map {
     private Ball ball;
     private GiftManager giftManager;
     private String giftName = "", giftActiveSeconds = "";
-    private FontMetrics fm;
 
     public Map(Game game, String path){
         this.game = game;
@@ -31,7 +30,6 @@ public class Map {
         ball = new Ball(game,-1,-1);
         giftManager = new GiftManager();
         loadMap(path);
-        fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
     }
 
     private void loadMap(String path){
@@ -92,12 +90,12 @@ public class Map {
     }
 
     private void drawGiftName(Graphics g){
-        //FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
+        FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
         Text.getInstance().drawText(g, giftName, (infoPanelWidth - fm.stringWidth(giftName)) / 2, yInfoPanel + (infoPanelHeight - fm.getHeight()) / 2, infoPanelHeight, Color.ORANGE, Assets.getInstance().getFont26());
     }
 
     private void drawGiftActiveSeconds(Graphics g){
-        //FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
+        FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
         Text.getInstance().drawText(g, giftActiveSeconds, fm.stringWidth(giftName) + (infoPanelWidth - fm.stringWidth(giftName)) / 2 + 5, yInfoPanel + (infoPanelHeight - fm.getHeight()) / 2, infoPanelHeight, Color.ORANGE, Assets.getInstance().getFont26());
     }
 
