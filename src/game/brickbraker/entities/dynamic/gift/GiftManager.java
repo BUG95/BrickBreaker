@@ -11,7 +11,7 @@ public class GiftManager {
         gifts = new ArrayList<>();
     }
 
-    public void addAdvantageGift(Gift gift){
+    public void addGift(Gift gift){
         gifts.add(gift);
     }
 

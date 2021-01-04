@@ -28,12 +28,12 @@ public class UIText extends UIObject {
     public void render(Graphics g) {
         g.setFont(font);
         if(isHovering()){
-            g.setColor(Color.RED);
-        } else {
             g.setColor(Color.GREEN);
+        } else {
+            g.setColor(Color.DARK_GRAY);
         }
-       // g.fillRect((int)x, (int)y, width, height);
-       // g.setColor(Color.ORANGE);
+        //g.fillRect((int)x, (int)y, width, height);
+        //g.setColor(Color.ORANGE);
         g.drawString(text, (int)x, (int)y + (height - fm.getHeight()) / 2 + fm.getAscent() + fm.getDescent() / 7);
     }
 

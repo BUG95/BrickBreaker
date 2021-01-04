@@ -7,7 +7,6 @@ import game.brickbraker.ui.UIManager;
 import game.brickbraker.ui.UIText;
 import game.brickbraker.ui.about.About;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class MenuState extends State {

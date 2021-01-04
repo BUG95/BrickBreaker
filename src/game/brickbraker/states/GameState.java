@@ -2,6 +2,7 @@ package game.brickbraker.states;
 
 import game.brickbraker.Game;
 import game.brickbraker.map.Map;
+import game.brickbraker.ui.UIManager;
 
 import java.awt.*;
 

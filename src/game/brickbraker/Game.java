@@ -3,10 +3,7 @@ package game.brickbraker;
 import game.brickbraker.display.Display;
 import game.brickbraker.input.KeyManager;
 import game.brickbraker.input.MouseManager;
-import game.brickbraker.states.GameState;
-import game.brickbraker.states.MenuState;
-import game.brickbraker.states.State;
-import game.brickbraker.states.StateManager;
+import game.brickbraker.states.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -27,6 +24,7 @@ public class Game implements Runnable {
     // states
     private State gameState;
     private State menuState;
+    private State gameOver;
 
     public Game(String title, int width, int height){
         this.title = title;
@@ -37,6 +35,7 @@ public class Game implements Runnable {
         displayInit();
         gameState = new GameState(this);
         menuState = new MenuState(this);
+        gameOver = new GameOverState(this);
         StateManager.getInstance().setCurrentState(menuState);
     }
 
@@ -136,6 +135,10 @@ public class Game implements Runnable {
 
     public MouseManager getMouseManager(){
         return mouseManager;
+    }
+
+    public GameOverState getGameOverState(){
+        return (GameOverState) gameOver;
     }
 
 }

@@ -1,6 +1,12 @@
 package game.brickbraker.entities.dynamic;
 
 import game.brickbraker.Game;
+import game.brickbraker.gfx.Assets;
+import game.brickbraker.states.ClickListener;
+import game.brickbraker.states.GameOverState;
+import game.brickbraker.states.StateManager;
+import game.brickbraker.ui.UIManager;
+import game.brickbraker.ui.UIText;
 
 import java.awt.*;
 
@@ -10,7 +16,7 @@ public class Player extends DynamicEntity {
     private static final int DEFAULT_PLAYER_SPEED = 6;
     private int giftPlayerSpeed = 0;
     private final int MAX_LIVES = 3;
-    private int lives = 3;
+    private int lives = 1;
     private long score = 0;
 
     public Player(Game game, float x, float y) {
@@ -55,10 +61,19 @@ public class Player extends DynamicEntity {
 
     public void setLives(int lives){this.lives=lives;}
 
+    private void checkGameOver(){
+        if(lives <= 0){
+            StateManager.getInstance().setCurrentState(game.getGameOverState());
+            GameOverState obj =(GameOverState) StateManager.getInstance().getCurrentState();
+            obj.init();
+        }
+    }
+
     public void decreaseLives(){
         if(lives > 0){
             lives--;
         }
+        checkGameOver();
     }
 
     public void increaseLives(){
