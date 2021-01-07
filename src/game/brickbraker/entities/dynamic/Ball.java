@@ -171,10 +171,7 @@ public class Ball extends DynamicEntity {
     public void tick() {
         if(levelCompleted()){
             nextLevel();
-            if(Gift.thread.isAlive()){
-                Gift.thread.stop();
-                Gift.limitedGift = false;
-            }
+            Gift.stop();
             return;
         }
         checkInput();

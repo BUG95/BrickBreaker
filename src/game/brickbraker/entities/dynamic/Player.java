@@ -1,12 +1,8 @@
 package game.brickbraker.entities.dynamic;
 
 import game.brickbraker.Game;
-import game.brickbraker.gfx.Assets;
-import game.brickbraker.states.ClickListener;
 import game.brickbraker.states.GameOverState;
 import game.brickbraker.states.StateManager;
-import game.brickbraker.ui.UIManager;
-import game.brickbraker.ui.UIText;
 
 import java.awt.*;
 
@@ -62,7 +58,7 @@ public class Player extends DynamicEntity {
     public void setLives(int lives){this.lives=lives;}
 
     private void checkGameOver(){
-        if(lives <= 0){
+        if(lives < 0){
             StateManager.getInstance().setCurrentState(game.getGameOverState());
             GameOverState obj =(GameOverState) StateManager.getInstance().getCurrentState();
             obj.init();
@@ -70,7 +66,7 @@ public class Player extends DynamicEntity {
     }
 
     public void decreaseLives(){
-        if(lives > 0){
+        if(lives >= 0){
             lives--;
         }
         checkGameOver();

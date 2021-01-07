@@ -114,11 +114,7 @@ public class Game implements Runnable {
     public synchronized void stop(){
         if(!isRunning) return;
         isRunning = false;
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        thread.interrupt();
     }
 
     public Display getDisplay(){
@@ -141,4 +137,11 @@ public class Game implements Runnable {
         return (GameOverState) gameOver;
     }
 
+    public void setGameState(State gameState) {
+        this.gameState = gameState;
+    }
+
+    public State getMenuState() {
+        return menuState;
+    }
 }

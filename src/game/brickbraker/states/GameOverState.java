@@ -1,6 +1,7 @@
 package game.brickbraker.states;
 
 import game.brickbraker.Game;
+import game.brickbraker.entities.dynamic.gift.Gift;
 import game.brickbraker.gfx.Assets;
 import game.brickbraker.gfx.Text;
 import game.brickbraker.ui.UIManager;
@@ -34,8 +35,12 @@ public class GameOverState extends State {
                 Assets.getInstance().getFont26(), new ClickListener() {
             @Override
             public void onClick() {
+                game.stop();
+                Gift.stop();
                 game.getMouseManager().setUiManager(null);
+                game.getGameState().restart();
                 StateManager.getInstance().setCurrentState(game.getGameState());
+                game.start();
             }
         }));
 

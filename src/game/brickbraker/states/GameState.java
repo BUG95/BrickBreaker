@@ -2,7 +2,6 @@ package game.brickbraker.states;
 
 import game.brickbraker.Game;
 import game.brickbraker.map.Map;
-import game.brickbraker.ui.UIManager;
 
 import java.awt.*;
 
@@ -41,5 +40,10 @@ public class GameState extends State {
 
     public int getLevel(){
         return level;
+    }
+
+    public void restart(){
+        level = 1;
+        loadMap();
     }
 }

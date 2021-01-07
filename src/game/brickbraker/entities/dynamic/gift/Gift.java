@@ -13,11 +13,27 @@ public class Gift extends DynamicEntity implements Runnable{
     public static boolean limitedGift = false;
     private final int DEFAULT_ACTIVE_SECONDS = 10;
     private String name;
-    public static Thread thread;
+    private static Thread thread;
+    private static boolean activeGift = false;
 
     public Gift(Game game, float x, float y, float width, float height, boolean isActive, int level) {
         super(game, x, y, width, height, isActive, level);
-        thread = new Thread(this);
+    }
+
+    public synchronized void start(){
+        if(!activeGift){
+            activeGift = true;
+            thread = new Thread(this);
+            thread.start();
+        }
+    }
+
+    public static synchronized void stop(){
+        if(activeGift){
+            activeGift = false;
+            limitedGift = false;
+            thread.stop();
+        }
     }
 
     public void giveTheGift(){
@@ -45,7 +61,7 @@ public class Gift extends DynamicEntity implements Runnable{
             limitedGift = true;
         }
         if(limitedGift){
-            thread.start();
+           start();
         }
     }
 
@@ -113,4 +129,7 @@ public class Gift extends DynamicEntity implements Runnable{
         game.getGameState().getMap().setGiftActiveSeconds("");
     }
 
+    public boolean isActiveGift() {
+        return activeGift;
+    }
 }

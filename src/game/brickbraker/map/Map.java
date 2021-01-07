@@ -84,9 +84,9 @@ public class Map {
         drawGiftName(g);
         drawGiftActiveSeconds(g);
         brickManager.render(g);
-        player.render(g);
         giftManager.render(g);
         ball.render(g);
+        player.render(g);
     }
 
     private void drawGiftName(Graphics g){
