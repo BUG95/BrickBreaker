@@ -168,13 +168,7 @@ public class Assets {
     }
 
     public BufferedImage getBrickLevelByGameLevel(int gameLevel, int brickLevel){
-        BufferedImage bimg = null;
-        try{
-            bimg = bricksByGameLevel.get(gameLevel).get(brickLevel);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return bimg;
+        return bricksByGameLevel.get(gameLevel).get(brickLevel);
     }
 
     public BufferedImage getLevelBorder(){

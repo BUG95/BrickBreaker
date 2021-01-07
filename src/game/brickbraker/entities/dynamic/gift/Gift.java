@@ -98,7 +98,6 @@ public class Gift extends DynamicEntity implements Runnable{
         return isActive;
     }
 
-
     @Override
     public void run() {
         final int ONE_SECOND = 1000;
@@ -113,6 +112,7 @@ public class Gift extends DynamicEntity implements Runnable{
             }
         }
 
+        activeGift = false;
         limitedGift = false;
 
         if(level == 2){
@@ -129,7 +129,4 @@ public class Gift extends DynamicEntity implements Runnable{
         game.getGameState().getMap().setGiftActiveSeconds("");
     }
 
-    public boolean isActiveGift() {
-        return activeGift;
-    }
 }

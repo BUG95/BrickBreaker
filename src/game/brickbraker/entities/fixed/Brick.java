@@ -33,8 +33,8 @@ public class Brick extends FixedEntity {
 
     private void checkForGift(){
         boolean hasActiveGift = game.getGameState().getMap().getGiftManager().hasActiveGift();
-        boolean hasSpecialGift = Gift.limitedGift;
-        if(game.getGameState().getMap().getPlayer().getScore() % 2 == 0 && !hasActiveGift && !hasSpecialGift){
+        boolean hasLimitedGift = Gift.limitedGift;
+        if(game.getGameState().getMap().getPlayer().getScore() % 2 == 0 && !hasActiveGift && !hasLimitedGift){
             int randomGift = Utils.getRandomNumberInRange(Gift.AVAILABLE_GIFTS);
             game.getGameState().getMap().getGiftManager().addGift(new Gift(game, x, y, 20, 20, true, randomGift));
         }
