@@ -1,8 +1,8 @@
 # BrickBreaker
 Brick Breaker Game
+DOWNLOAD: https://github.com/BUG95/BrickBreaker/blob/master/BrickBreaker_jar.rar
 
-Game images
-
+Game images:
 ![alt text](img/1.jpg)
 ![alt text](img/2.jpg)
 ![alt text](img/3.jpg)
