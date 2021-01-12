@@ -30,7 +30,7 @@ public class UIText extends UIObject {
         if(isHovering()){
             g.setColor(Color.GREEN);
         } else {
-            g.setColor(Color.DARK_GRAY);
+            g.setColor(Color.WHITE);
         }
         //g.fillRect((int)x, (int)y, width, height);
         //g.setColor(Color.ORANGE);

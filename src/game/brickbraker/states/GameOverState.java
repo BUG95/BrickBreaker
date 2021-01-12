@@ -36,7 +36,7 @@ public class GameOverState extends State {
 
         FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
         float x = (game.getDisplay().getCanvas().getWidth() - fm.stringWidth(restart)) / 2.0f;
-        float y = (game.getDisplay().getCanvas().getHeight() - fm.getHeight()) / 2.0f + fm.getAscent() + fm.getHeight();
+        float y = (3 * game.getDisplay().getCanvas().getHeight() / 4.0f - fm.getHeight()) / 2.0f + fm.getAscent() + fm.getHeight();
 
         int width = fm.stringWidth(restart);
         int height = fm.getAscent() - fm.getDescent() / 2;
@@ -67,7 +67,7 @@ public class GameOverState extends State {
         g.fillRect(0,0, game.getDisplay().getCanvas().getWidth(), game.getDisplay().getCanvas().getHeight());
         FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont90());
         if(!info.equals("")){
-            Text.getInstance().drawText(g, info, (game.getDisplay().getCanvas().getWidth() - fm.stringWidth(info)) / 2,0, game.getDisplay().getCanvas().getHeight(), Color.RED, Assets.getInstance().getFont90());
+            Text.getInstance().drawText(g, info, (game.getDisplay().getCanvas().getWidth() - fm.stringWidth(info)) / 2,0, 3 * game.getDisplay().getCanvas().getHeight() / 4, Color.YELLOW, Assets.getInstance().getFont90());
         }
         uiManager.render(g);
     }

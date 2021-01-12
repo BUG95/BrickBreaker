@@ -12,7 +12,7 @@ public class Player extends DynamicEntity {
     private static final int DEFAULT_PLAYER_SPEED = 6;
     private int giftPlayerSpeed = 0;
     private final int MAX_LIVES = 3;
-    private int lives = 1;
+    private int lives = 3;
     private long score = 0;
 
     public Player(Game game, float x, float y) {
