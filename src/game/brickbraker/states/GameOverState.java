@@ -12,26 +12,36 @@ import java.awt.*;
 public class GameOverState extends State {
 
     private UIManager uiManager;
+    private String info = "";
+    public static final int OUT_OF_LIVES = 1, GAME_COMPLETED = 2;
 
     public GameOverState(Game game) {
         super(game);
         uiManager = new UIManager(game);
     }
 
-    public void init(){
+    public void init(int state){
         game.getMouseManager().setUiManager(uiManager);
-        addOptions();
+        addOptions(state);
     }
 
-    private void addOptions(){
+    private void addOptions(int state){
+        if(state == OUT_OF_LIVES){
+            info = "OUT OF LIVES";
+        } else if(state == GAME_COMPLETED){
+            info = "GAME COMPLETED";
+        }
+
+        String restart = "RESTART";
+
         FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont26());
-        float x = (game.getDisplay().getCanvas().getWidth() - fm.stringWidth("RESTART")) / 2.0f;
+        float x = (game.getDisplay().getCanvas().getWidth() - fm.stringWidth(restart)) / 2.0f;
         float y = (game.getDisplay().getCanvas().getHeight() - fm.getHeight()) / 2.0f + fm.getAscent() + fm.getHeight();
 
-        int width = fm.stringWidth("RESTART");
+        int width = fm.stringWidth(restart);
         int height = fm.getAscent() - fm.getDescent() / 2;
 
-        uiManager.addObject(new UIText((int) x, (int) y, width, height, "RESTART",
+        uiManager.addObject(new UIText((int) x, (int) y, width, height, restart,
                 Assets.getInstance().getFont26(), new ClickListener() {
             @Override
             public void onClick() {
@@ -56,7 +66,9 @@ public class GameOverState extends State {
         g.setColor(Color.BLACK);
         g.fillRect(0,0, game.getDisplay().getCanvas().getWidth(), game.getDisplay().getCanvas().getHeight());
         FontMetrics fm = Text.getInstance().getFontMetricsOf(Assets.getInstance().getFont90());
-        Text.getInstance().drawText(g, "GAME OVER", (game.getDisplay().getCanvas().getWidth() - fm.stringWidth("GAME OVER")) / 2,0, game.getDisplay().getCanvas().getHeight(), Color.RED, Assets.getInstance().getFont90());
+        if(!info.equals("")){
+            Text.getInstance().drawText(g, info, (game.getDisplay().getCanvas().getWidth() - fm.stringWidth(info)) / 2,0, game.getDisplay().getCanvas().getHeight(), Color.RED, Assets.getInstance().getFont90());
+        }
         uiManager.render(g);
     }
 

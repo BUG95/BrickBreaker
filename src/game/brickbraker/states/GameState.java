@@ -16,7 +16,12 @@ public class GameState extends State {
 
     public void levelUp(){
         level++;
-        //if(level > MAX_LEVEL); /* switch state to game completed" */
+        if(level > MAX_LEVEL){
+            StateManager.getInstance().setCurrentState(game.getGameOverState());
+            GameOverState obj =(GameOverState) StateManager.getInstance().getCurrentState();
+            obj.init(GameOverState.GAME_COMPLETED);
+            return;
+        }
         loadMap();
     }
 

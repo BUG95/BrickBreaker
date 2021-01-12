@@ -53,7 +53,8 @@ public class Map {
         int width = Utils.parseInt(tokens[10]);
         int height = Utils.parseInt(tokens[11]);
 
-        int xStartPos = 0, yStartPos = topBorderHeight + (int)Brick.BRICK_HEIGHT, xOffset, yOffset;
+        final int xStartOffset = 5;
+        int xStartPos = xStartOffset, yStartPos = topBorderHeight + (int)Brick.BRICK_HEIGHT, xOffset, yOffset;
         xOffset = (int)Brick.BRICK_WIDTH + 5;
         yOffset = (int)Brick.BRICK_HEIGHT + 5;
 
@@ -65,7 +66,7 @@ public class Map {
                 xStartPos += xOffset;
             }
             yStartPos += yOffset;
-            xStartPos = xOffset;
+            xStartPos = xOffset + xStartOffset;
         }
     }
 

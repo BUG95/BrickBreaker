@@ -61,7 +61,7 @@ public class Player extends DynamicEntity {
         if(lives < 0){
             StateManager.getInstance().setCurrentState(game.getGameOverState());
             GameOverState obj =(GameOverState) StateManager.getInstance().getCurrentState();
-            obj.init();
+            obj.init(GameOverState.OUT_OF_LIVES);
         }
     }
 
